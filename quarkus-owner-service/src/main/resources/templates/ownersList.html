@@ -3,35 +3,51 @@
   {#include page.html}
   {#title}Owners{/title}
   {#content}
-  {#if owners.size == 0}
-    <div class="alert alert-warning" role="alert">
-      No owners were found.
+<div class="container mt-5">
+    {#if owners.size == 0}
+    <div class="glass-panel rounded-4 p-5 border border-info border-opacity-25 text-center">
+        <span class="badge rounded-pill text-bg-info text-dark fw-semibold px-3 py-2 mb-3">MODERNIZADO - QUARKUS SERVICE</span>
+        <h2 class="h4 fw-bold mb-1">No se encontraron dueños en MongoDB</h2>
+        <p class="mb-4 text-white-50">La base de datos nueva está vacía. ¡Usa el botón "Add Owner" para estrenar el microservicio!</p>
+        <a href="/owners/new" class="btn btn-info rounded-pill px-4"> + Add New Owner</a>
     </div>
-  {#else}
-  <table class="table table-striped table-bordered">
-    <thead>
-    <tr>
-      <th>Name</th>
-      <th>Address</th>
-      <th>City</th>
-      <th>Telephone</th>
-      <th>Pets</th>
-    </tr>
-    </thead>
-    {#for o in owners}
-    <tr>
-      <td><a href="/owners/{o._id}">{o.owner.first_name} {o.owner.last_name}</a></td>
-      <td>{o.owner.address}</td>
-      <td>{o.owner.city}</td>
-      <td>{o.owner.telephone}</td>
-      <td>
-        {#for p in o.pets}
-          <span>{p.name}&nbsp;</span>
+    {#else}
+    <div class="d-flex flex-wrap align-items-center justify-content-between gap-3 mb-4">
+        <div>
+            <div class="text-uppercase small fw-semibold text-info mb-2" style="letter-spacing: .14em;">Servicio de Nueva Generación</div>
+            <h2 class="h3 fw-bold mb-1">Panel de Control de Dueños</h2>
+        </div>
+        <span class="badge rounded-pill text-bg-info text-dark fw-semibold px-3 py-2">MODERNIZADO - QUARKUS SERVICE</span>
+    </div>
+
+    <div class="row row-cols-1 row-cols-md-2 row-cols-xl-3 g-4">
+        {#for o in owners}
+        <div class="col">
+            <div class="card h-100 border-0 glass-panel rounded-4 overflow-hidden text-white">
+                <div class="card-header border-0 py-4 px-4" style="background: linear-gradient(135deg, rgba(76, 201, 240, 0.2), rgba(124, 58, 237, 0.2));">
+                    <h3 class="h4 fw-bold mb-0">{o.owner.first_name} {o.owner.last_name}</h3>
+                    <small class="text-info">ID: {o._id}</small>
+                </div>
+                <div class="card-body p-4">
+                    <p class="mb-1"><strong>Dirección:</strong> {o.owner.address}</p>
+                    <p class="mb-1"><strong>Ciudad:</strong> {o.owner.city}</p>
+                    <p class="mb-3"><strong>Tel:</strong> {o.owner.telephone}</p>
+                    
+                    <div class="mt-3">
+                        <div class="text-uppercase small fw-semibold text-info mb-2">Mascotas</div>
+                        {#for p in o.pets}
+                        <span class="badge rounded-pill bg-primary me-1">{p.name}</span>
+                        {/for}
+                    </div>
+                </div>
+                <div class="card-footer border-0 p-4 pt-0 bg-transparent">
+                    <a class="btn btn-outline-info btn-sm rounded-pill w-100" href="/owners/{o._id}">Ver Perfil Completo</a>
+                </div>
+            </div>
+        </div>
         {/for}
-      </td>
-    </tr>
-    {/for}
-  </table>
-  {/if}
-  {/content}
-  {/include}
+    </div>
+    {/if}
+</div>
+{/content}
+{/include}
